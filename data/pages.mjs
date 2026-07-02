@@ -244,6 +244,21 @@ export const home = {
     { label: "옥천", url: "/chungbuk/okcheon/" }, { label: "영동", url: "/chungbuk/yeongdong/" },
     { label: "단양", url: "/chungbuk/danyang/" },
   ],
+  // 롱테일 내부링크 (설명형 앵커텍스트)
+  longtail: [
+    { label: "대전 둔산·탄방 업무지구 이용 안내", url: "/chungcheong/life/daejeon-dunsan/" },
+    { label: "대전 유성온천 호텔·숙소 이용 안내", url: "/chungcheong/life/daejeon-yuseong/" },
+    { label: "세종 나성·새롬 신도시 오피스텔 안내", url: "/sejong/life/naseong-saerom/" },
+    { label: "천안 불당·쌍용 예약 전 확인", url: "/cheonan/life/buldang-ssangyong/" },
+    { label: "천안 두정·성정 역세권 상권 안내", url: "/cheonan/life/dujeong-seongjeong/" },
+    { label: "천안아산역 인접 생활권 안내", url: "/chungcheong/area/cheonan-asan/" },
+    { label: "아산 배방·탕정 출장 숙소 안내", url: "/chungnam/asan/" },
+    { label: "청주 오송·오창 산업권 이용 기준", url: "/chungcheong/area/cheongju-osong-ochang/" },
+    { label: "오피스텔 이용 전 확인사항", url: "/chungcheong/use/officetel/" },
+    { label: "호텔·숙소 이용 전 확인", url: "/chungcheong/use/hotel/" },
+    { label: "산업단지 인접 이용 기준", url: "/chungcheong/use/industrial-area/" },
+    { label: "야간 예약 안내", url: "/chungcheong/use/night/" },
+  ],
   useCards: [
     { label: "상황별 이용 안내", url: "/chungcheong/use/scenarios/" },
     { label: "자택", url: "/chungcheong/use/home/" }, { label: "호텔·숙소", url: "/chungcheong/use/hotel/" },

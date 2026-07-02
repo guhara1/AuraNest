@@ -27,6 +27,10 @@ export const site = {
 
   // 대표 이미지 (og:image / schema image 기본값)
   defaultImage: "/assets/og-default.svg",
+
+  // 검색엔진 사이트 소유확인 (네이버 서치어드바이저 등)
+  naverVerification: "871efbd7bdb2fe43ef810f583af079af7ef33cda",
+  googleVerification: "", // 구글 서치콘솔 메타값 있으면 입력
 };
 
 // 이용 코스 · 요금 (모든 지역 페이지에 공통 노출)

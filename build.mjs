@@ -200,6 +200,7 @@ async function renderHome() {
     url: home.url, canonical: home.canonical, navCurrent: home.navCurrent,
     title: home.title, description: home.description, breadcrumbs: home.breadcrumbs, h1: home.h1,
     image: site.defaultImage, faqs: BASE_FAQ,
+    service: { name: "세종·충청권 지역·생활권 안내", type: "지역·생활권 안내", area: site.regionServed },
   };
   const checklistHtml = `<ul class="checklist">${[
     "방문 주소를 정확히 확인했나요?",
@@ -245,6 +246,10 @@ async function renderHome() {
   <section class="section"><div class="container">
     <h2>이용 장소에 따라 확인할 내용이 다릅니다</h2>
     ${cardGrid(home.useCards, 4)}
+  </div></section>
+  <section class="section"><div class="container">
+    <h2>많이 찾는 지역·이용 안내</h2>
+    <p class="admin-list">${home.longtail.map((l) => `<a href="${l.url}">${esc(l.label)}</a>`).join(" · ")}</p>
   </div></section>
   ${renderPricing()}
   <section class="section"><div class="container"><div class="layout">
@@ -400,17 +405,91 @@ function imgSlug(r) {
   return (r.navCurrent || r.url).replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "") || r.slug;
 }
 
-// ── 사이트맵 / robots ────────────────────────────────────────────────────────
+// ── 사이트맵 / RSS / robots ──────────────────────────────────────────────────
+const BASE = site.baseUrl.replace(/\/$/, "");
+const LASTMOD = new Date().toISOString().slice(0, 10);
+
 async function writeSitemap() {
   const urls = written.filter((u) => u !== "/404.html" && !noindexUrls.has(u));
+  const priority = (u) =>
+    u === "/" ? "1.0" : /^\/(daejeon|sejong|cheonan|chungnam|chungbuk)\/$/.test(u) ? "0.9" : "0.7";
   const body = urls
-    .map((u) => `  <url><loc>${site.baseUrl.replace(/\/$/, "") + u}</loc></url>`)
+    .map(
+      (u) =>
+        `  <url><loc>${BASE + u}</loc><lastmod>${LASTMOD}</lastmod><changefreq>weekly</changefreq><priority>${priority(u)}</priority></url>`
+    )
     .join("\n");
-  await writeFile(join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
+  await writeFile(
+    join(OUT, "sitemap.xml"),
+    `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${body}
-</urlset>`, "utf8");
-  await writeFile(join(OUT, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${site.baseUrl.replace(/\/$/, "")}/sitemap.xml\n`, "utf8");
+</urlset>`,
+    "utf8"
+  );
+
+  await writeFile(
+    join(OUT, "robots.txt"),
+    `# robots.txt — ${site.brand}
+User-agent: *
+Allow: /
+
+# 주요 검색엔진 명시 허용
+User-agent: Googlebot
+Allow: /
+User-agent: Yeti
+Allow: /
+User-agent: Bingbot
+Allow: /
+
+Sitemap: ${BASE}/sitemap.xml
+`,
+    "utf8"
+  );
+}
+
+// RSS 2.0 피드 (색인 발견 촉진용) — 홈·권역·핵심 지역 위주
+async function writeRss() {
+  const feedUrls = written.filter(
+    (u) => u === "/" || /^\/(daejeon|sejong|cheonan|chungnam|chungbuk)\/$/.test(u) ||
+      /^\/chungcheong\/(area|life)\//.test(u) || /^\/chung(nam|buk)\/[a-z]+\/$/.test(u) ||
+      /^\/(daejeon|cheonan)\/[a-z-]+-gu\/$/.test(u) || u === "/chungbuk/cheongju/"
+  ).filter((u) => !noindexUrls.has(u));
+  const meta = (u) => {
+    const r = regionByUrl[u] || (u === "/" ? home : null);
+    return {
+      title: (r && (r.title || r.h1)) || site.brand,
+      desc: (r && r.description) || "세종·충청권 지역 안내",
+    };
+  };
+  const items = feedUrls
+    .map((u) => {
+      const m = meta(u);
+      return `    <item>
+      <title>${esc(m.title)}</title>
+      <link>${BASE + u}</link>
+      <guid isPermaLink="true">${BASE + u}</guid>
+      <description>${esc(m.desc)}</description>
+      <pubDate>${new Date(LASTMOD).toUTCString()}</pubDate>
+    </item>`;
+    })
+    .join("\n");
+  await writeFile(
+    join(OUT, "rss.xml"),
+    `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${esc(site.brand)} · 세종·충청권 지역 안내</title>
+    <link>${BASE}/</link>
+    <atom:link href="${BASE}/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>세종·충청권 지역·생활권·이용 안내</description>
+    <language>ko</language>
+    <lastBuildDate>${new Date(LASTMOD).toUTCString()}</lastBuildDate>
+${items}
+  </channel>
+</rss>`,
+    "utf8"
+  );
 }
 
 // ── 실행 ─────────────────────────────────────────────────────────────────────
@@ -431,6 +510,7 @@ async function main() {
 
   await writeAssets();
   await writeSitemap();
+  await writeRss();
 
   console.log(`생성 완료: ${written.length} 페이지`);
   written.sort().forEach((u) => console.log("  " + u));
