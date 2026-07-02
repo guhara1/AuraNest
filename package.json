@@ -1,0 +1,11 @@
+{
+  "name": "ganda-go",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "간다GO — 세종·충청권 지역 안내 정적 사이트",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "node build.mjs && node --experimental-default-type=module -e \"import('node:http').then(({default:h})=>import('node:fs').then(({default:fs})=>h.createServer((q,s)=>{let p='dist'+(q.url.endsWith('/')?q.url+'index.html':q.url);fs.readFile(p,(e,d)=>{if(e){s.statusCode=404;s.end('404')}else{s.end(d)}})}).listen(8080,()=>console.log('http://localhost:8080'))))\""
+  }
+}
