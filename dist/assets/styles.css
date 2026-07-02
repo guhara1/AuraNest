@@ -347,4 +347,4 @@ p { margin: 0 0 1rem; color: var(--text); }
 }
 
 /* 업로드된 히어로 이미지 */
-:root{--hero-image:url("/assets/hero.jpg")}
+:root{--hero-image:url("/assets/hero.webp")}
