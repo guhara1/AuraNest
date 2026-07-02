@@ -10,6 +10,8 @@ import { renderDocument, esc, renderPricing } from "./lib/templates.mjs";
 import { regionBody, sidebar, BASE_FAQ } from "./lib/content.mjs";
 import { regionMains } from "./data/regions.mjs";
 import { daejeonDistricts, cheonanDistricts, areaPages } from "./data/subregions.mjs";
+import { lifeZones } from "./data/expansion.mjs";
+import { cities } from "./data/cities.mjs";
 import { usePages, checkPages, contactPage, home } from "./data/pages.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -240,7 +242,7 @@ async function writeAssets() {
   // 기본 og 이미지
   await writeFile(join(OUT, "assets/og-default.svg"), regionSvg("세종·충청권 지역 안내"), "utf8");
   // 지역별 대표 이미지
-  const all = [...regionMains, ...daejeonDistricts, ...cheonanDistricts, ...areaPages];
+  const all = [...regionMains, ...daejeonDistricts, ...cheonanDistricts, ...areaPages, ...lifeZones, ...cities];
   for (const r of all) {
     const slug = imgSlug(r);
     await writeFile(join(OUT, `assets/region-${slug}.svg`), regionSvg(r.area), "utf8");
@@ -271,10 +273,8 @@ async function main() {
   await mkdir(OUT, { recursive: true });
 
   await renderHome();
-  for (const r of regionMains) await renderRegion(r, imgSlug(r));
-  for (const r of areaPages) await renderRegion(r, imgSlug(r));
-  for (const r of daejeonDistricts) await renderRegion(r, imgSlug(r));
-  for (const r of cheonanDistricts) await renderRegion(r, imgSlug(r));
+  const regionAll = [...regionMains, ...areaPages, ...daejeonDistricts, ...cheonanDistricts, ...lifeZones, ...cities];
+  for (const r of regionAll) await renderRegion(r, imgSlug(r));
   for (const p of usePages) await renderContentPage(p, "use");
   for (const p of checkPages) await renderContentPage(p, "check");
   await renderContact();

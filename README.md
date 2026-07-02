@@ -1,6 +1,6 @@
 # 간다GO — 세종·충청권 지역 안내 사이트
 
-정적 사이트 생성기(순수 Node.js, 의존성 0). `node build.mjs` 실행 시 `dist/`에 전체 HTML을 생성합니다.
+정적 사이트 생성기(순수 Node.js, 의존성 0). `node build.mjs` 실행 시 `dist/`에 전체 HTML(현재 57페이지)을 생성합니다. **프리미엄 다크 테마**(블랙 배경·밝은 텍스트·고대비 가독성).
 
 ## 빌드
 
@@ -20,6 +20,8 @@ lib/templates.mjs     문서 셸 · JSON-LD 스키마 · 헤더/푸터 · 가격
 lib/content.mjs       지역 본문 조립기 (개요·행정구역·생활권·역·이용·확인·FAQ·WHW)
 data/regions.mjs      광역권 메인 (대전/세종/천안/충남/충북)
 data/subregions.mjs   대전 5개 구 · 천안 2개 구 · 핵심 광역권
+data/expansion.mjs    핵심 생활권 (대전 둔산·유성 / 천안 불당·두정·신부 / 세종 나성·조치원)
+data/cities.mjs       충남·충북 핵심 시 (아산·공주·논산·서산·당진 / 청주·충주·제천·진천)
 data/pages.mjs        이용 장소(9) · 예약 전 확인(10) · 문의 · 홈
 build.mjs             생성기 (dist/ 출력 · sitemap · robots · 이미지)
 ```
