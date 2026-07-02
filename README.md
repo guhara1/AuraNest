@@ -61,6 +61,18 @@ build.mjs             생성기 (dist/ 출력 · sitemap · robots · 이미지)
 - 메뉴명·앵커에 "출장마사지" 반복 및 순위 보장 표현 미사용
 - og:image / schema image 지정, sitemap.xml · robots.txt 생성
 
+## 히어로 배경 이미지 (직접 업로드)
+
+원하는 이미지를 히어로 배경에 넣으려면 저장소의 **`assets/` 폴더에 `hero.jpg`** 파일을 올리면 됩니다.
+
+- 인식 파일명: `hero.jpg` · `hero.jpeg` · `hero.png` · `hero.webp` · `hero.avif` (첫 번째로 발견되는 파일 사용)
+- 업로드 위치(깃허브): **`assets/hero.jpg`** (브랜치 `claude/ganda-go-footer-seo-v33mcx`)
+- 배포 후 접근 URL: `https://auranest-massage.netlify.app/assets/hero.jpg`
+- 빌드가 자동 감지해 전 페이지 히어로 배경에 적용하며, 어두운 오버레이가 위에 깔려 **글씨 가독성은 유지**됩니다. 파일이 없으면 기존 그라디언트가 표시됩니다.
+- 권장: 가로로 넓은 이미지(예: 1600×800 이상), 너무 밝지 않은 사진(텍스트가 흰색이므로).
+
+> 깃허브 웹에서 업로드: 저장소 → `assets` 폴더 → **Add file → Upload files** → 이미지를 올리고 파일명을 `hero.jpg` 로. 커밋하면 Netlify가 재빌드하며 반영됩니다.
+
 ## 요금표
 
 `config.mjs`의 `pricing`에서 관리하며 **모든 지역·이용·확인 페이지 하단에 공통 노출**됩니다. "예약 문의" 버튼은 전화예약으로 연결됩니다.

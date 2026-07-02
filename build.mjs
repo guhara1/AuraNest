@@ -1,7 +1,7 @@
 // ============================================================================
 // 정적 사이트 생성기 — dist/ 로 출력
 // ============================================================================
-import { mkdir, writeFile, copyFile, rm } from "node:fs/promises";
+import { mkdir, writeFile, copyFile, rm, readdir, appendFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -288,14 +288,30 @@ function regionSvg(label) {
 
 async function writeAssets() {
   await mkdir(join(OUT, "assets"), { recursive: true });
-  await copyFile(join(__dirname, "assets/styles.css"), join(OUT, "assets/styles.css"));
-  // 파비콘 · 아이콘 · 매니페스트 (루트 경로)
+  // assets/ 안의 모든 파일을 dist/assets/ 로 복사 (업로드한 이미지 자동 배포)
+  const srcAssets = await readdir(join(__dirname, "assets"), { withFileTypes: true });
+  for (const d of srcAssets) {
+    if (d.isFile()) await copyFile(join(__dirname, "assets", d.name), join(OUT, "assets", d.name));
+  }
+  // 파비콘 · 아이콘 · 매니페스트 (루트 경로에도 배치)
   const rootAssets = [
     "favicon.ico", "favicon.svg", "apple-touch-icon.png",
     "icon-192.png", "icon-512.png", "site.webmanifest",
   ];
   for (const f of rootAssets) {
     await copyFile(join(__dirname, "assets", f), join(OUT, f));
+  }
+  // 히어로 이미지 자동 감지: assets/hero.(jpg|jpeg|png|webp) 가 있으면 히어로 배경에 적용
+  const heroCandidate = srcAssets.find(
+    (d) => d.isFile() && /^hero\.(jpe?g|png|webp|avif)$/i.test(d.name)
+  );
+  if (heroCandidate) {
+    await appendFile(
+      join(OUT, "assets/styles.css"),
+      `\n/* 업로드된 히어로 이미지 */\n:root{--hero-image:url("/assets/${heroCandidate.name}")}\n`,
+      "utf8"
+    );
+    console.log(`  ★ 히어로 이미지 적용: /assets/${heroCandidate.name}`);
   }
   // 기본 og 이미지
   await writeFile(join(OUT, "assets/og-default.svg"), regionSvg("세종·충청권 지역 안내"), "utf8");

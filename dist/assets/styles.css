@@ -112,7 +112,11 @@ p { margin: 0 0 1rem; color: var(--text); }
 /* ── 히어로 (오버레이) ───────────────────────────────────────────────────── */
 .hero {
   position: relative; color: #fff;
-  background: var(--overlay-hero), radial-gradient(circle at 82% 15%, #2a3350, #070a11 70%);
+  /* 위 → 아래: 어두운 오버레이(가독성) · (선택)업로드 이미지 · 기본 그라디언트 */
+  background:
+    var(--overlay-hero),
+    var(--hero-image, none) center / cover no-repeat,
+    radial-gradient(circle at 82% 15%, #2a3350, #070a11 70%);
   padding: 4.5rem 0 4rem;
   overflow: hidden;
   border-bottom: 1px solid var(--line);
