@@ -14,6 +14,7 @@ import { lifeZones } from "./data/expansion.mjs";
 import { cities } from "./data/cities.mjs";
 import { cities2 } from "./data/cities2.mjs";
 import { cheongjuDistricts, sejongZones } from "./data/cheongju.mjs";
+import { hubPage, aboutPage } from "./data/info.mjs";
 import { usePages, checkPages, contactPage, home } from "./data/pages.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -113,17 +114,26 @@ async function renderContentPage(p, crumbLabel) {
     .map((s) => {
       const body = s.body ? `<p>${esc(s.body)}</p>` : "";
       const list = s.list ? `<ul>${s.list.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>` : "";
-      return `<h2>${esc(s.h2)}</h2>${body}${list}`;
+      // 링크 목록 (거점 안내 등 내부링크 강화용)
+      const linkList = s.linkList
+        ? `<ul>${s.linkList
+            .map((l) => `<li><a href="${l.url}">${esc(l.label)}</a>${l.note ? ` — ${esc(l.note)}` : ""}</li>`)
+            .join("")}</ul>`
+        : "";
+      return `<h2>${esc(s.h2)}</h2>${body}${list}${linkList}`;
     })
     .join("");
-  const relatedLinks = crumbLabel === "use"
+  const eyebrow = p.eyebrow || (crumbLabel === "use" ? "이용 장소" : "예약 전 확인");
+  const relatedLinks = p.relatedLinks
+    ? p.relatedLinks
+    : crumbLabel === "use"
     ? usePages.filter((x) => x.url !== p.url).slice(0, 6).map((x) => ({ label: x.h1, url: x.url }))
     : checkPages.filter((x) => x.url !== p.url).slice(0, 6).map((x) => ({ label: x.h1, url: x.url }));
   const aside = sidebar(relatedLinks);
   const article = `<article class="prose"><p>${esc(p.lead)}</p>${sections}
-    <p class="muted">문의는 <a href="/contact/">문의하기</a>, 운영 기준은 <a href="/chungcheong/check/service-policy/">불법·선정적 서비스 불가 안내</a>에서 확인할 수 있습니다.</p>
+    <p class="muted">문의는 <a href="/contact/">문의하기</a>, 운영 기준은 <a href="/about/">운영 기준·소개</a>와 <a href="/chungcheong/check/service-policy/">불법·선정적 서비스 불가 안내</a>에서 확인할 수 있습니다.</p>
   </article>`;
-  const body = `<section class="hero"><div class="container"><span class="eyebrow">${crumbLabel === "use" ? "이용 장소" : "예약 전 확인"}</span><h1>${esc(p.h1)}</h1><p class="lede">${esc(p.lead)}</p><div class="cta-row"><a class="btn btn-accent" href="${site.phoneHref}">전화예약 ${esc(site.phone)}</a></div></div></section>
+  const body = `<section class="hero"><div class="container"><span class="eyebrow">${esc(eyebrow)}</span><h1>${esc(p.h1)}</h1><p class="lede">${esc(p.lead)}</p><div class="cta-row"><a class="btn btn-accent" href="${site.phoneHref}">전화예약 ${esc(site.phone)}</a></div></div></section>
   ${document_breadcrumb(p.breadcrumbs)}
   <section class="section"><div class="container"><div class="layout">${article}${aside}</div></div></section>
   ${renderPricing()}`;
@@ -284,6 +294,8 @@ async function main() {
   for (const r of REGION_ALL) await renderRegion(r, imgSlug(r));
   for (const p of usePages) await renderContentPage(p, "use");
   for (const p of checkPages) await renderContentPage(p, "check");
+  await renderContentPage(hubPage, "info");
+  await renderContentPage(aboutPage, "info");
   await renderContact();
 
   await writeAssets();

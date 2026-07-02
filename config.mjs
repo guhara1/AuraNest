@@ -50,8 +50,9 @@ export const nav = [
   { label: "청주권", url: "/chungcheong/area/cheongju-osong-ochang/" },
   { label: "충남", url: "/chungnam/" },
   { label: "충북", url: "/chungbuk/" },
+  { label: "거점 안내", url: "/chungcheong/hubs/" },
   { label: "이용 장소", url: "/chungcheong/use/home/" },
   { label: "예약 전 확인", url: "/chungcheong/check/address/" },
-  { label: "운영 기준", url: "/chungcheong/check/service-policy/" },
+  { label: "운영 기준", url: "/about/" },
   { label: "문의하기", url: "/contact/" },
 ];

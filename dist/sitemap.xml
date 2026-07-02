@@ -79,5 +79,7 @@
   <url><loc>https://ganda-go.example.com/chungcheong/check/privacy/</loc></url>
   <url><loc>https://ganda-go.example.com/chungcheong/check/service-policy/</loc></url>
   <url><loc>https://ganda-go.example.com/chungcheong/check/customer-notice/</loc></url>
+  <url><loc>https://ganda-go.example.com/chungcheong/hubs/</loc></url>
+  <url><loc>https://ganda-go.example.com/about/</loc></url>
   <url><loc>https://ganda-go.example.com/contact/</loc></url>
 </urlset>
