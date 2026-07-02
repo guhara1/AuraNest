@@ -262,13 +262,7 @@ async function renderHome() {
   </div></div></section>`;
 
   await emit(home.url, renderDocument(page, body));
-
-  // 루트(/) — 홈으로 즉시 이동 + 캐노니컬은 /chungcheong/
-  const rootHtml = renderDocument(
-    { ...page, url: "/", canonical: "/chungcheong/" },
-    body
-  );
-  await emit("/", rootHtml);
+  // 루트(/)는 중복 방지를 위해 페이지를 만들지 않고 Netlify에서 /chungcheong/ 로 301 리다이렉트.
 }
 
 // ── 행정동/읍·면 개별 페이지 (탐색·안내용 · noindex,follow) ──────────────────
@@ -278,10 +272,11 @@ async function renderDong({ parent, groupLabel, item, siblings }) {
   const unit = groupLabel.includes("읍") ? "읍·면" : groupLabel.includes("면") ? "동·면" : "행정동";
   const page = {
     url, canonical: url, noindex: true, // 도어웨이 방지: 비색인(탐색용)
-    title: `${parent.area} ${name} 방문 안내 | 간다GO`,
-    description: `${parent.area} ${name} 방문 전 주소·출입 방식·예약 가능 시간 확인 안내입니다.`.slice(0, 80),
+    // 타이틀·H1·설명은 '지역+출장마사지'로 시작 (SEO 규칙)
+    title: `${parent.area} ${name} 출장마사지 · 방문 안내 | 간다GO`,
+    description: `${parent.area} ${name} 출장마사지 방문 전 주소·출입·예약 시간 확인 안내.`.slice(0, 80),
     breadcrumbs: [...parent.breadcrumbs, { label: name, url }],
-    h1: `${parent.area} ${name} 방문 안내`,
+    h1: `${parent.area} ${name} 출장마사지 · 방문 안내`,
     image: site.defaultImage,
   };
   noindexUrls.add(url);
