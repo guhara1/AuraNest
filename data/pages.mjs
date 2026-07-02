@@ -9,6 +9,33 @@ const checkCrumb = { label: "예약 전 확인", url: "/chungcheong/check/addres
 // ── 이용 장소 페이지 ─────────────────────────────────────────────────────────
 export const usePages = [
   {
+    url: "/chungcheong/use/scenarios/", h1: "상황별 이용 안내", title: "상황별 방문마사지 이용 안내 | 간다GO",
+    eyebrow: "상황별 이용 안내",
+    description: "원룸·이사 후·출근 전·야간 등 상황별 방문 이용 방법과 확인 사항을 안내합니다.",
+    breadcrumbs: [CC, useCrumb, { label: "상황별 이용 안내", url: "/chungcheong/use/scenarios/" }],
+    lead: "생활 상황에 따라 이용 방법과 확인할 점이 조금씩 다릅니다. 아래는 자주 문의되는 상황별 이용 예시로, 실제 서비스 내용·범위는 예약 시 안내되는 기준을 따릅니다.",
+    sections: [
+      { h2: "원룸·좁은 공간에서 이용", body: "원룸처럼 공간이 좁아도 접이식 매트를 펼 자리만 있으면 이용할 수 있습니다. 방문 전 매트를 펼 공간과 동선, 콘센트 위치 정도를 확인해 두면 편리합니다." },
+      { h2: "이사 직후 이용", body: "이사 후 짐 정리로 허리·어깨가 뭉쳤을 때 새 집에서 바로 이용할 수 있습니다. 정확한 새 주소와 공동현관 출입 방식, 엘리베이터 이용 가능 여부를 확인해 주세요." },
+      { h2: "장시간 공부·집중 후 케어", body: "오래 앉아 공부하거나 작업하면 목·어깨가 뭉치기 쉽습니다. 공부방 등 원하는 공간에서 비교적 짧은 시간으로도 이용할 수 있으며, 불편한 부위를 미리 알려주시면 안내에 도움이 됩니다." },
+      { h2: "명절·집안일 뒤 피로 관리", body: "명절 가사나 장시간 서서 하는 일로 피로가 쌓였을 때 집에서 편하게 이용할 수 있습니다. 이용 시간대와 방문 가능 시간을 함께 확인하면 예약이 수월합니다." },
+      { h2: "몸 상태·불편한 부위 미리 알리기", body: "관리 전에 평소 불편한 부위나 컨디션을 미리 알려주시면 시간 배분과 안내에 도움이 됩니다. 특정 질환이 있거나 통증이 심한 경우에는 무리하지 않도록 미리 말씀해 주세요." },
+      { h2: "출근 전 아침 시간 이용", body: "오피스텔·자택에서 출근 전 짧은 시간으로 예약할 수 있습니다. 이른 시간 예약은 건물의 방문 가능 시간대와 공동현관 출입 방식을 미리 확인하는 것이 좋습니다." },
+      { h2: "예약 변경·취소가 필요할 때", body: "일정이 바뀌면 가능한 한 빨리 연락 주세요. 관리사가 이동하기 전에 연락하면 변경·취소가 한결 수월합니다. 자세한 기준은 예약 변경 기준 페이지에서 확인할 수 있습니다." },
+      { h2: "집 안 공간 활용 시 유의점", body: "집 안에서 편한 공간을 활용할 수 있지만, 외부 시선과 사생활, 안전, 날씨를 고려해 안정적인 실내 공간을 권장합니다. 방문 공간의 바닥 여건도 함께 확인해 주세요." },
+      { h2: "야간·심야 시간 이용", body: "야간·심야 이용은 예약 시 가능 여부와 건물의 방문 가능 시간을 확인해 안내합니다. 이동 거리에 따라 소요 시간이 늘 수 있어 시간을 여유 있게 잡는 것이 좋습니다." },
+      { h2: "약속·외출 전 컨디션 정돈", body: "약속이나 외출 전 짧은 시간으로 뭉친 부위를 풀고 컨디션을 정돈하는 용도로도 이용할 수 있습니다. 희망 시간과 이동 소요 시간을 함께 확인해 주세요." },
+    ],
+    relatedLinks: [
+      { label: "자택 이용", url: "/chungcheong/use/home/" },
+      { label: "오피스텔 이용", url: "/chungcheong/use/officetel/" },
+      { label: "호텔·숙소 이용", url: "/chungcheong/use/hotel/" },
+      { label: "야간 예약", url: "/chungcheong/use/night/" },
+      { label: "예약 변경 기준", url: "/chungcheong/check/change-policy/" },
+      { label: "고객 유의사항", url: "/chungcheong/check/customer-notice/" },
+    ],
+  },
+  {
     url: "/chungcheong/use/home/", h1: "자택 이용 안내", title: "자택 출장마사지 이용 안내 | 간다GO",
     description: "자택 이용 시 정확한 주소·공동현관·주차 등 확인사항을 안내합니다.",
     breadcrumbs: [CC, useCrumb, { label: "자택 이용", url: "/chungcheong/use/home/" }],
@@ -218,6 +245,7 @@ export const home = {
     { label: "단양", url: "/chungbuk/danyang/" },
   ],
   useCards: [
+    { label: "상황별 이용 안내", url: "/chungcheong/use/scenarios/" },
     { label: "자택", url: "/chungcheong/use/home/" }, { label: "호텔·숙소", url: "/chungcheong/use/hotel/" },
     { label: "오피스텔", url: "/chungcheong/use/officetel/" }, { label: "업무지구", url: "/chungcheong/use/business-district/" },
     { label: "산업단지 인접", url: "/chungcheong/use/industrial-area/" }, { label: "KTX·터미널 인접", url: "/chungcheong/use/station-terminal/" },
