@@ -43,7 +43,7 @@ export const pricing = {
 
 // 상단 글로벌 내비게이션 (메뉴명에 "출장마사지" 반복 금지)
 export const nav = [
-  { label: "충청 홈", url: "/chungcheong/" },
+  { label: "충청 홈", url: "/" },
   { label: "대전", url: "/daejeon/" },
   { label: "세종", url: "/sejong/" },
   { label: "천안·아산", url: "/cheonan/" },

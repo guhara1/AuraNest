@@ -320,7 +320,7 @@ async function render404() {
     url: "/404.html", canonical: "/404.html", noindex: true,
     title: "페이지를 찾을 수 없습니다 (404) | 간다GO",
     description: "요청하신 페이지를 찾을 수 없습니다. 지역 안내 홈에서 다시 찾아보세요.",
-    breadcrumbs: [{ label: "충청 홈", url: "/chungcheong/" }],
+    breadcrumbs: [{ label: "충청 홈", url: "/" }],
     h1: "페이지를 찾을 수 없습니다",
   };
   const body = `<section class="hero"><div class="container">
@@ -328,7 +328,7 @@ async function render404() {
     <h1>페이지를 찾을 수 없습니다</h1>
     <p class="lede">주소가 바뀌었거나 존재하지 않는 페이지입니다. 아래에서 원하는 지역 안내를 다시 찾아보세요.</p>
     <div class="cta-row">
-      <a class="btn btn-accent" href="/chungcheong/">충청 홈으로</a>
+      <a class="btn btn-accent" href="/">충청 홈으로</a>
       <a class="btn btn-ghost" href="/chungcheong/hubs/">거점 안내</a>
       <a class="btn btn-ghost" href="/contact/">문의하기</a>
     </div>
@@ -402,7 +402,7 @@ function imgSlug(r) {
 
 // ── 사이트맵 / robots ────────────────────────────────────────────────────────
 async function writeSitemap() {
-  const urls = written.filter((u) => u !== "/" && u !== "/404.html" && !noindexUrls.has(u));
+  const urls = written.filter((u) => u !== "/404.html" && !noindexUrls.has(u));
   const body = urls
     .map((u) => `  <url><loc>${site.baseUrl.replace(/\/$/, "") + u}</loc></url>`)
     .join("\n");

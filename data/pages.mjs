@@ -199,9 +199,9 @@ export const contactPage = {
 
 // ── 홈페이지 섹션 (Section 25) ───────────────────────────────────────────────
 export const home = {
-  url: "/chungcheong/",
-  canonical: "/chungcheong/",
-  navCurrent: "/chungcheong/",
+  url: "/",
+  canonical: "/",
+  navCurrent: "/",
   title: "세종·충청도 출장마사지 | 천안·대전·청주 지역 안내 · 간다GO",
   h1: "세종·충청도 출장마사지 · 생활권별 방문 가능 지역 안내",
   eyebrow: "세종·충청권 지역 안내",

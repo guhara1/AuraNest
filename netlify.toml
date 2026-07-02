@@ -9,9 +9,12 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# 루트(/)는 지역 안내 홈으로 301 (중복 콘텐츠 방지)
+# 홈은 루트(/)로 이동 — 옛 /chungcheong/ 주소는 루트로 301 (중복 방지)
 [[redirects]]
-  from = "/"
-  to = "/chungcheong/"
+  from = "/chungcheong"
+  to = "/"
   status = 301
-  force = true
+[[redirects]]
+  from = "/chungcheong/"
+  to = "/"
+  status = 301

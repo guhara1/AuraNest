@@ -3,7 +3,7 @@
 // description 은 모두 80자 이내로 작성
 // ============================================================================
 
-const CC = { label: "충청 홈", url: "/chungcheong/" };
+const CC = { label: "충청 홈", url: "/" };
 
 // 광역권 메인 (대전/세종/천안/충남/충북)
 export const regionMains = [
