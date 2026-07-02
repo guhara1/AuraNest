@@ -204,16 +204,18 @@ export const home = {
   chungnam: [
     { label: "천안", url: "/cheonan/" }, { label: "아산", url: "/chungnam/asan/" },
     { label: "공주", url: "/chungnam/gongju/" }, { label: "논산", url: "/chungnam/nonsan/" },
-    { label: "계룡", url: "/chungcheong/area/chungnam-south/" }, { label: "서산", url: "/chungnam/seosan/" },
-    { label: "당진", url: "/chungnam/dangjin/" }, { label: "홍성·내포", url: "/chungcheong/area/chungnam-northwest/" },
-    { label: "예산", url: "/chungcheong/area/chungnam-northwest/" }, { label: "보령", url: "/chungcheong/area/chungnam-south/" },
+    { label: "계룡", url: "/chungnam/gyeryong/" }, { label: "서산", url: "/chungnam/seosan/" },
+    { label: "당진", url: "/chungnam/dangjin/" }, { label: "홍성·내포", url: "/chungnam/hongseong/" },
+    { label: "예산", url: "/chungnam/yesan/" }, { label: "보령", url: "/chungnam/boryeong/" },
+    { label: "부여", url: "/chungnam/buyeo/" }, { label: "태안", url: "/chungnam/taean/" },
   ],
   chungbuk: [
     { label: "청주", url: "/chungbuk/cheongju/" }, { label: "오송", url: "/chungcheong/area/cheongju-osong-ochang/" },
     { label: "오창", url: "/chungcheong/area/cheongju-osong-ochang/" }, { label: "충주", url: "/chungbuk/chungju/" },
     { label: "제천", url: "/chungbuk/jecheon/" }, { label: "진천", url: "/chungbuk/jincheon/" },
-    { label: "음성", url: "/chungcheong/area/chungbuk-central-north/" }, { label: "증평", url: "/chungcheong/area/chungbuk-central-north/" },
-    { label: "단양", url: "/chungcheong/area/chungbuk-central-north/" },
+    { label: "음성", url: "/chungbuk/eumseong/" }, { label: "증평", url: "/chungbuk/jeungpyeong/" },
+    { label: "옥천", url: "/chungbuk/okcheon/" }, { label: "영동", url: "/chungbuk/yeongdong/" },
+    { label: "단양", url: "/chungbuk/danyang/" },
   ],
   useCards: [
     { label: "자택", url: "/chungcheong/use/home/" }, { label: "호텔·숙소", url: "/chungcheong/use/hotel/" },

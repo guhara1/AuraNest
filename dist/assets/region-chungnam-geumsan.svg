@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-label="금산">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0b1220"/><stop offset="0.6" stop-color="#1a2036"/><stop offset="1" stop-color="#b0480c"/>
+  </linearGradient></defs>
+  <rect width="1200" height="600" fill="url(#g)"/>
+  <circle cx="1000" cy="120" r="220" fill="#ef6c19" opacity="0.22"/>
+  <text x="80" y="330" fill="#ffffff" font-family="Pretendard, sans-serif" font-size="58" font-weight="800">금산</text>
+  <text x="80" y="392" fill="#c9a24b" font-family="Pretendard, sans-serif" font-size="26" font-weight="600">간다GO · 세종·충청권 지역 안내</text>
+</svg>

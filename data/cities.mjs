@@ -186,8 +186,11 @@ export const cities = [
       why: "청주는 원도심·신시가지·산업권이 뚜렷이 나뉘어 생활권 구분이 먼저이기 때문입니다.",
     },
     sidebar: [
-      { label: "청주·오송·오창권", url: "/chungcheong/area/cheongju-osong-ochang/" }, { label: "충북 메인", url: "/chungbuk/" },
-      { label: "산업단지 인접 이용", url: "/chungcheong/use/industrial-area/" },
+      { label: "상당구(성안길·용암)", url: "/chungbuk/cheongju/sangdang-gu/" },
+      { label: "서원구(사창·산남)", url: "/chungbuk/cheongju/seowon-gu/" },
+      { label: "흥덕구(가경·복대·오송)", url: "/chungbuk/cheongju/heungdeok-gu/" },
+      { label: "청원구(율량·오창)", url: "/chungbuk/cheongju/cheongwon-gu/" },
+      { label: "청주·오송·오창권", url: "/chungcheong/area/cheongju-osong-ochang/" },
     ],
     related: [{ label: "충주 지역 안내", url: "/chungbuk/chungju/" }],
     authorityLinks: [{ label: "청주시청", url: "https://www.cheongju.go.kr/" }],

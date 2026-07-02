@@ -94,10 +94,13 @@ export const regionMains = [
       why: "세종은 신도시와 읍면 외곽의 이동 거리 차이가 커서 위치 구분이 예약의 기준이 되기 때문입니다.",
     },
     sidebar: [
+      { label: "나성·새롬 생활권", url: "/sejong/life/naseong-saerom/" },
+      { label: "어진·종촌 생활권", url: "/sejong/life/eojin-jongchon/" },
+      { label: "보람·소담 생활권", url: "/sejong/life/boram-sodam/" },
+      { label: "고운·아름 생활권", url: "/sejong/life/goun-areum/" },
+      { label: "조치원 생활권", url: "/sejong/life/jochiwon/" },
+      { label: "금남·부강 외곽권", url: "/sejong/life/geumnam-bugang/" },
       { label: "세종권 광역 안내", url: "/chungcheong/area/sejong/" },
-      { label: "천안·아산권", url: "/cheonan/" },
-      { label: "청주·오송·오창권", url: "/chungcheong/area/cheongju-osong-ochang/" },
-      { label: "읍면 외곽 이용 기준", url: "/chungcheong/use/outer-area/" },
     ],
     related: [
       { label: "대전 생활권 안내", url: "/daejeon/" },
