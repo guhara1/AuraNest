@@ -219,6 +219,16 @@ p { margin: 0 0 1rem; color: var(--text); }
 .breadcrumb a:hover { color: var(--accent-300); }
 .breadcrumb span { margin: 0 0.4rem; }
 
+/* ── 행정구역 목록 ───────────────────────────────────────────────────────── */
+.admin-list { display: flex; flex-wrap: wrap; gap: 0.4rem 0.5rem; align-items: center; margin: 0.4rem 0 1rem; }
+.admin-list a, .admin-list span {
+  display: inline-block; font-size: 0.86rem; font-weight: 600; line-height: 1;
+  padding: 0.4rem 0.65rem; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--bg-100); color: var(--text-muted);
+}
+.admin-list a { color: var(--accent-300); border-color: var(--accent-line); }
+.admin-list a:hover { background: var(--accent-soft); text-decoration: none; }
+
 /* ── 대표 이미지 ─────────────────────────────────────────────────────────── */
 .hero-figure { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--line); }
 
