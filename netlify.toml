@@ -1,0 +1,10 @@
+# Netlify 배포 설정
+# `node build.mjs` 로 dist/ 를 생성하고 그 폴더를 서빙합니다.
+# (없는 경로는 Netlify가 자동으로 dist/404.html 을 응답합니다.)
+
+[build]
+  command = "node build.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

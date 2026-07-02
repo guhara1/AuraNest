@@ -11,8 +11,8 @@ export const site = {
   phone: "0508-202-4719",
   phoneHref: "tel:0508-202-4719",
 
-  // 배포 도메인 (실제 도메인으로 교체하세요)
-  baseUrl: "https://ganda-go.example.com",
+  // 배포 도메인
+  baseUrl: "https://auranest-massage.netlify.app",
 
   // 대표 지역/서비스 (schema · 문구용)
   regionServed: "세종·충청권",

@@ -13,6 +13,17 @@ npm run build         # 동일
 
 `dist/`를 그대로 정적 호스팅(Netlify, Vercel, S3, Nginx 등)에 배포하면 됩니다.
 
+### Netlify 배포
+
+`netlify.toml`이 포함되어 있습니다 — 빌드 명령 `node build.mjs`, 퍼블리시 폴더 `dist`, Node 22.
+
+1. Netlify에서 이 저장소(`guhara1/AuraNest`)를 연결합니다.
+2. **Production branch** 를 `claude/ganda-go-footer-seo-v33mcx` (콘텐츠가 있는 브랜치)로 지정합니다.
+3. Deploy settings는 `netlify.toml`이 자동 적용하므로 별도 입력이 필요 없습니다.
+4. Deploy 후 루트(`/`)와 `/chungcheong/` 가 모두 열립니다. 없는 경로는 `/404.html` 로 응답합니다.
+
+> 도메인: `https://auranest-massage.netlify.app` (`config.mjs`의 `baseUrl`). 커스텀 도메인 연결 시 `baseUrl`도 함께 교체하세요.
+
 ## 구조
 
 ```

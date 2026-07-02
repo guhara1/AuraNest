@@ -20,6 +20,7 @@ import { usePages, checkPages, contactPage, home } from "./data/pages.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "dist");
 const written = [];
+const noindexUrls = new Set();
 
 // 모든 지역형 페이지 (렌더 · 이미지 · 사이트맵 공통 소스)
 const REGION_ALL = [
@@ -82,7 +83,7 @@ async function renderRegion(r, slugKey) {
   // 본문 2,000자 미만이면 임시 noindex (스펙 23항)
   const textLen = [...article.replace(/<[^>]+>/g, " ").replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ").trim()].length;
   page.noindex = r.noindex ?? textLen < 2000;
-  if (page.noindex) console.warn(`  ⚠ noindex (${textLen}자): ${r.url}`);
+  if (page.noindex) { noindexUrls.add(r.url); console.warn(`  ⚠ noindex (${textLen}자): ${r.url}`); }
 
   const aside = sidebar(r.sidebar || [], r.related || []);
   const body = `${hero(r)}
@@ -241,6 +242,37 @@ async function renderHome() {
   await emit("/", rootHtml);
 }
 
+// ── 404 페이지 ───────────────────────────────────────────────────────────────
+async function render404() {
+  const page = {
+    url: "/404.html", canonical: "/404.html", noindex: true,
+    title: "페이지를 찾을 수 없습니다 (404) | 간다GO",
+    description: "요청하신 페이지를 찾을 수 없습니다. 지역 안내 홈에서 다시 찾아보세요.",
+    breadcrumbs: [{ label: "충청 홈", url: "/chungcheong/" }],
+    h1: "페이지를 찾을 수 없습니다",
+  };
+  const body = `<section class="hero"><div class="container">
+    <span class="eyebrow">404</span>
+    <h1>페이지를 찾을 수 없습니다</h1>
+    <p class="lede">주소가 바뀌었거나 존재하지 않는 페이지입니다. 아래에서 원하는 지역 안내를 다시 찾아보세요.</p>
+    <div class="cta-row">
+      <a class="btn btn-accent" href="/chungcheong/">충청 홈으로</a>
+      <a class="btn btn-ghost" href="/chungcheong/hubs/">거점 안내</a>
+      <a class="btn btn-ghost" href="/contact/">문의하기</a>
+    </div>
+  </div></section>
+  <section class="section"><div class="container">
+    <h2>지역 바로가기</h2>
+    ${cardGrid([
+      { label: "대전", url: "/daejeon/" }, { label: "세종", url: "/sejong/" },
+      { label: "천안·아산", url: "/cheonan/" }, { label: "청주", url: "/chungbuk/cheongju/" },
+      { label: "충남", url: "/chungnam/" }, { label: "충북", url: "/chungbuk/" },
+      { label: "이용 장소", url: "/chungcheong/use/home/" }, { label: "예약 전 확인", url: "/chungcheong/check/address/" },
+    ], 4)}
+  </div></section>`;
+  await emit("/404.html", renderDocument(page, body));
+}
+
 // ── 이미지(SVG placeholder) ─────────────────────────────────────────────────
 function regionSvg(label) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-label="${esc(label)}">
@@ -257,6 +289,14 @@ function regionSvg(label) {
 async function writeAssets() {
   await mkdir(join(OUT, "assets"), { recursive: true });
   await copyFile(join(__dirname, "assets/styles.css"), join(OUT, "assets/styles.css"));
+  // 파비콘 · 아이콘 · 매니페스트 (루트 경로)
+  const rootAssets = [
+    "favicon.ico", "favicon.svg", "apple-touch-icon.png",
+    "icon-192.png", "icon-512.png", "site.webmanifest",
+  ];
+  for (const f of rootAssets) {
+    await copyFile(join(__dirname, "assets", f), join(OUT, f));
+  }
   // 기본 og 이미지
   await writeFile(join(OUT, "assets/og-default.svg"), regionSvg("세종·충청권 지역 안내"), "utf8");
   // 지역별 대표 이미지
@@ -274,7 +314,7 @@ function imgSlug(r) {
 
 // ── 사이트맵 / robots ────────────────────────────────────────────────────────
 async function writeSitemap() {
-  const urls = written.filter((u) => u !== "/");
+  const urls = written.filter((u) => u !== "/" && u !== "/404.html" && !noindexUrls.has(u));
   const body = urls
     .map((u) => `  <url><loc>${site.baseUrl.replace(/\/$/, "") + u}</loc></url>`)
     .join("\n");
@@ -297,6 +337,7 @@ async function main() {
   await renderContentPage(hubPage, "info");
   await renderContentPage(aboutPage, "info");
   await renderContact();
+  await render404();
 
   await writeAssets();
   await writeSitemap();

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="간다GO">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f97a2b"/>
+      <stop offset="1" stop-color="#b84f10"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <!-- 위치 핀 (지역 안내) -->
+  <path d="M32 13c-7.7 0-14 6.1-14 13.7 0 9.9 12.2 22.4 13.1 23.3a1.3 1.3 0 0 0 1.8 0c.9-.9 13.1-13.4 13.1-23.3C46 19.1 39.7 13 32 13z" fill="#ffffff"/>
+  <circle cx="32" cy="27" r="5.6" fill="#b84f10"/>
+</svg>
