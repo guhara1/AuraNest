@@ -301,6 +301,43 @@ p { margin: 0 0 1rem; color: var(--text); }
   .hero { padding: 3rem 0; }
 }
 
+/* ── 플로팅 전화 버튼 (모든 페이지 · 우측 하단 · 애니메이션) ────────────────── */
+.fab-call {
+  position: fixed; right: 18px; bottom: 20px; z-index: 90;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 1.15rem 0.85rem 0.95rem; border-radius: 999px;
+  background: var(--overlay-accent); color: #fff; font-weight: 800; font-size: 0.98rem;
+  box-shadow: 0 10px 28px rgba(224, 100, 26, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4);
+  animation: fab-bob 2.4s ease-in-out infinite;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.fab-call:hover { color: #fff; text-decoration: none; transform: translateY(-2px); box-shadow: 0 16px 36px rgba(224, 100, 26, 0.6); }
+.fab-call:active { transform: scale(0.96); }
+.fab-icon { position: relative; display: grid; place-items: center; width: 26px; height: 26px; }
+.fab-icon svg { width: 24px; height: 24px; fill: #fff; animation: fab-ring 1s ease-in-out infinite; transform-origin: center; }
+.fab-text { white-space: nowrap; }
+/* 확산되는 링(펄스) */
+.fab-ring {
+  position: absolute; left: 8px; top: 50%; width: 46px; height: 46px; margin-top: -23px;
+  border-radius: 50%; background: var(--accent-500); z-index: -1;
+  animation: fab-pulse 2s ease-out infinite;
+}
+@keyframes fab-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes fab-ring { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-12deg); } 40% { transform: rotate(12deg); } 60% { transform: rotate(-8deg); } 80% { transform: rotate(6deg); } }
+@keyframes fab-pulse { 0% { transform: scale(0.9); opacity: 0.55; } 70% { transform: scale(2.1); opacity: 0; } 100% { opacity: 0; } }
+
+/* 데스크톱: 라벨 노출 / 모바일: 아이콘 원형 버튼(큰 터치 영역) */
+@media (max-width: 640px) {
+  .fab-call { right: 14px; bottom: 16px; padding: 0; width: 60px; height: 60px; justify-content: center; }
+  .fab-text { display: none; }
+  .fab-icon { width: 30px; height: 30px; }
+  .fab-icon svg { width: 28px; height: 28px; }
+  .fab-ring { left: 50%; margin-left: -30px; width: 60px; height: 60px; margin-top: -30px; }
+}
+
 /* ── 접근성 ──────────────────────────────────────────────────────────────── */
 :focus-visible { outline: 2px solid var(--accent-400); outline-offset: 2px; border-radius: 4px; }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto; }
+  .fab-call, .fab-call svg, .fab-ring { animation: none !important; }
+}
