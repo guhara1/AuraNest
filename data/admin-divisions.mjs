@@ -136,4 +136,108 @@ export const adminDivisions = {
   "/chungbuk/yeongdong/": { groups: [{ label: "읍·면", items: S(["영동읍","황간면","매곡면","상촌면","양강면","용산면","심천면","양산면","학산면","용화면","추풍령면"]) }] },
   "/chungbuk/boeun/": { groups: [{ label: "읍·면", items: S(["보은읍","속리산면","장안면","마로면","탄부면","삼승면","수한면","회남면","회인면","내북면","산외면"]) }] },
   "/chungbuk/danyang/": { groups: [{ label: "읍·면", items: S(["단양읍","매포읍","대강면","가곡면","영춘면","어상천면","적성면","단성면"]) }] },
+
+  // ── 충남·충북 권역 메인 (시·군) ────────────────────────────────────────────
+  "/chungnam/": {
+    note: "충남은 8개 시와 7개 군으로 구성됩니다. 각 시·군을 눌러 행정동·읍·면을 확인하세요.",
+    groups: [
+      { label: "시", items: [
+        { label: "천안시", url: "/cheonan/" }, { label: "아산시", url: "/chungnam/asan/" },
+        { label: "공주시", url: "/chungnam/gongju/" }, { label: "논산시", url: "/chungnam/nonsan/" },
+        { label: "계룡시", url: "/chungnam/gyeryong/" }, { label: "서산시", url: "/chungnam/seosan/" },
+        { label: "당진시", url: "/chungnam/dangjin/" }, { label: "보령시", url: "/chungnam/boryeong/" },
+      ] },
+      { label: "군", items: [
+        { label: "홍성군", url: "/chungnam/hongseong/" }, { label: "예산군", url: "/chungnam/yesan/" },
+        { label: "부여군", url: "/chungnam/buyeo/" }, { label: "태안군", url: "/chungnam/taean/" },
+        { label: "서천군", url: "/chungnam/seocheon/" }, { label: "금산군", url: "/chungnam/geumsan/" },
+        { label: "청양군", url: "/chungnam/cheongyang/" },
+      ] },
+    ],
+  },
+  "/chungbuk/": {
+    note: "충북은 3개 시와 8개 군으로 구성됩니다. 각 시·군을 눌러 행정동·읍·면을 확인하세요.",
+    groups: [
+      { label: "시", items: [
+        { label: "청주시", url: "/chungbuk/cheongju/" }, { label: "충주시", url: "/chungbuk/chungju/" },
+        { label: "제천시", url: "/chungbuk/jecheon/" },
+      ] },
+      { label: "군", items: [
+        { label: "진천군", url: "/chungbuk/jincheon/" }, { label: "음성군", url: "/chungbuk/eumseong/" },
+        { label: "증평군", url: "/chungbuk/jeungpyeong/" }, { label: "괴산군", url: "/chungbuk/goesan/" },
+        { label: "옥천군", url: "/chungbuk/okcheon/" }, { label: "영동군", url: "/chungbuk/yeongdong/" },
+        { label: "보은군", url: "/chungbuk/boeun/" }, { label: "단양군", url: "/chungbuk/danyang/" },
+      ] },
+    ],
+  },
+
+  // ── 핵심 광역권 (구성 시·구) ───────────────────────────────────────────────
+  "/chungcheong/area/daejeon/": {
+    note: "대전권은 5개 자치구로 구성됩니다.",
+    groups: [{ label: "자치구", items: [
+      { label: "유성구", url: "/daejeon/yuseong-gu/" }, { label: "서구", url: "/daejeon/seo-gu/" },
+      { label: "중구", url: "/daejeon/jung-gu/" }, { label: "동구", url: "/daejeon/dong-gu/" },
+      { label: "대덕구", url: "/daejeon/daedeok-gu/" },
+    ] }],
+  },
+  "/chungcheong/area/sejong/": {
+    note: "세종권은 신도시 행정동과 읍·면으로 구성됩니다. 세종 메인에서 전체를 확인하세요.",
+    groups: [
+      { label: "행정동(신도시)", items: S(["한솔동","도담동","아름동","종촌동","고운동","보람동","새롬동","소담동","다정동","나성동","어진동","반곡동","집현동","합강동"]) },
+      { label: "읍·면", items: S(["조치원읍","연기면","연동면","부강면","금남면","장군면","연서면","전의면","전동면","소정면"]) },
+    ],
+  },
+  "/chungcheong/area/cheonan-asan/": {
+    note: "천안·아산권은 천안 2개 구와 아산시로 구성됩니다.",
+    groups: [{ label: "구성 지역", items: [
+      { label: "천안 서북구", url: "/cheonan/seobuk-gu/" }, { label: "천안 동남구", url: "/cheonan/dongnam-gu/" },
+      { label: "아산시", url: "/chungnam/asan/" },
+    ] }],
+  },
+  "/chungcheong/area/cheongju-osong-ochang/": {
+    note: "청주권은 4개 구와 오송·오창 산업권으로 구성됩니다.",
+    groups: [{ label: "자치구(일반구)", items: [
+      { label: "상당구", url: "/chungbuk/cheongju/sangdang-gu/" }, { label: "서원구", url: "/chungbuk/cheongju/seowon-gu/" },
+      { label: "흥덕구(오송)", url: "/chungbuk/cheongju/heungdeok-gu/" }, { label: "청원구(오창)", url: "/chungbuk/cheongju/cheongwon-gu/" },
+    ] }],
+  },
+  "/chungcheong/area/chungnam-northwest/": {
+    note: "충남 서북부권 주요 시·군입니다.",
+    groups: [{ label: "시·군", items: [
+      { label: "아산시", url: "/chungnam/asan/" }, { label: "서산시", url: "/chungnam/seosan/" },
+      { label: "당진시", url: "/chungnam/dangjin/" }, { label: "태안군", url: "/chungnam/taean/" },
+      { label: "예산군", url: "/chungnam/yesan/" }, { label: "홍성군", url: "/chungnam/hongseong/" },
+    ] }],
+  },
+  "/chungcheong/area/chungnam-south/": {
+    note: "충남 남부권 주요 시·군입니다.",
+    groups: [{ label: "시·군", items: [
+      { label: "공주시", url: "/chungnam/gongju/" }, { label: "논산시", url: "/chungnam/nonsan/" },
+      { label: "계룡시", url: "/chungnam/gyeryong/" }, { label: "부여군", url: "/chungnam/buyeo/" },
+      { label: "보령시", url: "/chungnam/boryeong/" }, { label: "서천군", url: "/chungnam/seocheon/" },
+      { label: "금산군", url: "/chungnam/geumsan/" }, { label: "청양군", url: "/chungnam/cheongyang/" },
+    ] }],
+  },
+  "/chungcheong/area/chungbuk-central-north/": {
+    note: "충북 중부·북부권 주요 시·군입니다.",
+    groups: [{ label: "시·군", items: [
+      { label: "충주시", url: "/chungbuk/chungju/" }, { label: "제천시", url: "/chungbuk/jecheon/" },
+      { label: "진천군", url: "/chungbuk/jincheon/" }, { label: "음성군", url: "/chungbuk/eumseong/" },
+      { label: "증평군", url: "/chungbuk/jeungpyeong/" }, { label: "괴산군", url: "/chungbuk/goesan/" },
+      { label: "단양군", url: "/chungbuk/danyang/" },
+    ] }],
+  },
+
+  // ── 핵심 생활권 (해당 생활권의 주요 동) ────────────────────────────────────
+  "/chungcheong/life/daejeon-dunsan/": { groups: [{ label: "주요 동", items: S(["둔산동","탄방동","만년동"]) }] },
+  "/chungcheong/life/daejeon-yuseong/": { groups: [{ label: "주요 동", items: S(["봉명동","궁동","어은동","구암동","장대동"]) }] },
+  "/cheonan/life/buldang-ssangyong/": { groups: [{ label: "주요 동", items: S(["불당동","쌍용동","백석동"]) }] },
+  "/cheonan/life/dujeong-seongjeong/": { groups: [{ label: "주요 동", items: S(["두정동","성정동","와촌동"]) }] },
+  "/cheonan/life/sinbu-terminal/": { groups: [{ label: "주요 동", items: S(["신부동","청당동","구성동"]) }] },
+  "/sejong/life/naseong-saerom/": { groups: [{ label: "주요 동", items: S(["나성동","새롬동","다정동","한솔동"]) }] },
+  "/sejong/life/jochiwon/": { groups: [{ label: "지역", items: S(["조치원읍"]) }] },
+  "/sejong/life/eojin-jongchon/": { groups: [{ label: "주요 동", items: S(["어진동","종촌동"]) }] },
+  "/sejong/life/boram-sodam/": { groups: [{ label: "주요 동", items: S(["보람동","소담동","대평동"]) }] },
+  "/sejong/life/goun-areum/": { groups: [{ label: "주요 동", items: S(["고운동","아름동"]) }] },
+  "/sejong/life/geumnam-bugang/": { groups: [{ label: "읍·면", items: S(["금남면","부강면"]) }] },
 };
