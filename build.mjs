@@ -16,6 +16,8 @@ import { cities2 } from "./data/cities2.mjs";
 import { cheongjuDistricts, sejongZones } from "./data/cheongju.mjs";
 import { hubPage, aboutPage } from "./data/info.mjs";
 import { usePages, checkPages, contactPage, home } from "./data/pages.mjs";
+import { adminDivisions } from "./data/admin-divisions.mjs";
+import { romanize } from "./lib/roman.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "dist");
@@ -27,6 +29,33 @@ const REGION_ALL = [
   ...regionMains, ...areaPages, ...daejeonDistricts, ...cheonanDistricts,
   ...lifeZones, ...cities, ...cities2, ...cheongjuDistricts, ...sejongZones,
 ];
+const regionByUrl = Object.fromEntries(REGION_ALL.map((r) => [r.url, r]));
+
+// ── 행정동/읍·면 개별 페이지 대상 산출 ──────────────────────────────────────
+// 시·구(및 세종) 페이지의 행정동·읍·면 항목에 URL을 부여하고 개별 페이지를 생성.
+// 광역권(area)·권역 메인(충남/충북)·생활권(life)은 제외(그 항목은 상위 링크/법정동 표기).
+function isDongParent(url) {
+  if (/\/(life|area)\//.test(url)) return false;
+  if (url === "/chungnam/" || url === "/chungbuk/") return false;
+  return true;
+}
+// 각 대상 부모의 plain 항목에 URL 주입 + 생성 목록 수집 (렌더 이전에 실행)
+const dongPages = [];
+for (const [parentUrl, data] of Object.entries(adminDivisions)) {
+  if (!isDongParent(parentUrl)) continue;
+  const parent = regionByUrl[parentUrl];
+  if (!parent) continue;
+  for (const group of data.groups) {
+    const linkedSiblings = group.items.filter((it) => !it.url); // 동/읍/면만
+    for (const it of group.items) {
+      if (it.url) continue; // 이미 링크(구 등)면 건너뜀
+      const slug = romanize(it.label);
+      if (!slug) continue;
+      it.url = parentUrl + slug + "/";
+      dongPages.push({ parent, groupLabel: group.label, item: it, siblings: linkedSiblings });
+    }
+  }
+}
 
 async function emit(url, html) {
   const rel = url.endsWith("/") ? url + "index.html" : url;
@@ -242,6 +271,54 @@ async function renderHome() {
   await emit("/", rootHtml);
 }
 
+// ── 행정동/읍·면 개별 페이지 (탐색·안내용 · noindex,follow) ──────────────────
+async function renderDong({ parent, groupLabel, item, siblings }) {
+  const name = item.label;
+  const url = item.url;
+  const unit = groupLabel.includes("읍") ? "읍·면" : groupLabel.includes("면") ? "동·면" : "행정동";
+  const page = {
+    url, canonical: url, noindex: true, // 도어웨이 방지: 비색인(탐색용)
+    title: `${parent.area} ${name} 방문 안내 | 간다GO`,
+    description: `${parent.area} ${name} 방문 전 주소·출입 방식·예약 가능 시간 확인 안내입니다.`.slice(0, 80),
+    breadcrumbs: [...parent.breadcrumbs, { label: name, url }],
+    h1: `${parent.area} ${name} 방문 안내`,
+    image: site.defaultImage,
+  };
+  noindexUrls.add(url);
+
+  const sib = siblings.filter((s) => s.label !== name);
+  const sibHtml = sib.length
+    ? `<h2>${esc(parent.area)}의 다른 ${esc(unit)}</h2><p class="admin-list">${sib
+        .map((s) => `<a href="${s.url}">${esc(s.label)}</a>`)
+        .join(" · ")}</p>`
+    : "";
+
+  const checklist = ["정확한 도로명 주소와 동·호수", "공동현관 또는 건물 출입 방식", "주차 가능 여부", "예약 가능 시간대"]
+    .map((c) => `<li>${esc(c)}</li>`)
+    .join("");
+
+  const article = `<article class="prose">
+    <p>${esc(name)}은(는) ${esc(parent.area)}에 속한 ${esc(unit)}입니다. 방문 시 정확한 주소와 건물 출입 방식, 예약 가능 시간을 확인하면 예약이 수월합니다. ${esc(parent.area)} 전체 생활권과 이용 기준은 <a href="${parent.url}">${esc(parent.area)} 안내</a>에서 함께 확인할 수 있습니다.</p>
+    <h2>방문 전 확인</h2><ul class="checklist">${checklist}</ul>
+    <h2>이용 장소별 안내</h2>
+    <p><a href="/chungcheong/use/home/">자택 이용</a> · <a href="/chungcheong/use/officetel/">오피스텔 이용</a> · <a href="/chungcheong/use/hotel/">호텔·숙소 이용</a> · <a href="/chungcheong/check/address/">예약 전 확인</a></p>
+    ${sibHtml}
+    <p class="muted">문의는 <a href="/contact/">문의하기</a>, 운영 기준은 <a href="/chungcheong/check/service-policy/">불법·선정적 서비스 불가 안내</a>에서 확인할 수 있습니다.</p>
+  </article>`;
+
+  const body = `<section class="hero"><div class="container">
+    <span class="eyebrow">${esc(parent.area)} · ${esc(unit)}</span>
+    <h1>${esc(page.h1)}</h1>
+    <p class="lede">${esc(parent.area)} ${esc(name)} 방문 전 확인 사항과 인접 지역을 안내합니다.</p>
+    <div class="cta-row"><a class="btn btn-accent" href="${site.phoneHref}">전화예약 ${esc(site.phone)}</a>
+    <a class="btn btn-ghost" href="${parent.url}">${esc(parent.area)} 안내</a></div>
+  </div></section>
+  ${document_breadcrumb(page.breadcrumbs)}
+  <section class="section"><div class="container"><div class="layout">${article}${sidebar(parent.sidebar || [{ label: `${parent.area} 안내`, url: parent.url }])}</div></div></section>
+  ${renderPricing()}`;
+  await emit(url, renderDocument(page, body));
+}
+
 // ── 404 페이지 ───────────────────────────────────────────────────────────────
 async function render404() {
   const page = {
@@ -348,6 +425,8 @@ async function main() {
 
   await renderHome();
   for (const r of REGION_ALL) await renderRegion(r, imgSlug(r));
+  for (const d of dongPages) await renderDong(d);
+  console.log(`  · 행정동/읍·면 개별 페이지: ${dongPages.length}개 (noindex)`);
   for (const p of usePages) await renderContentPage(p, "use");
   for (const p of checkPages) await renderContentPage(p, "check");
   await renderContentPage(hubPage, "info");
